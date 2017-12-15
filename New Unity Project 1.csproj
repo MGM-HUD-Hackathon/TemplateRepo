@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.3p2</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -99,6 +101,7 @@
     <Compile Include="Assets\DAQRI\Scripts\AdditionalControls.cs" />
     <Compile Include="Assets\DAQRI\Scripts\CalibrationControls.cs" />
     <Compile Include="Assets\DAQRI\Scripts\ColorCameraControls.cs" />
+    <Compile Include="Assets\DAQRI\Scripts\Constants.cs" />
     <Compile Include="Assets\DAQRI\Scripts\CreateParentCanvas.cs" />
     <Compile Include="Assets\DAQRI\Scripts\DepthControls.cs" />
     <Compile Include="Assets\DAQRI\Scripts\ExampleApplicationLifeCycleEventImpl.cs" />
@@ -136,6 +139,7 @@
     <Compile Include="Assets\DAQRI\Scripts\UI\UniversalMenu\MenuNextPageButton.cs" />
     <Compile Include="Assets\DAQRI\Scripts\UI\UniversalMenu\MenuPage.cs" />
     <Compile Include="Assets\DAQRI\Scripts\UI\UniversalMenu\UniversalMenu.cs" />
+    <Compile Include="Assets\Controllers\VectorCalculator.cs" />
     <Compile Include="Assets\DAQRI\Scripts\VIOInitializer.cs" />
     <Compile Include="Assets\DAQRI\Scripts\VideoSeeThrough.cs" />
     <Compile Include="Assets\DAQRI\System\Scripts\ApplicationLifeCycleEventHandler.cs" />
@@ -161,6 +165,7 @@
     <None Include="Assets\DAQRI\System\Shaders\UIOverlay.shader" />
     <None Include="Assets\DAQRI\System\config.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>
