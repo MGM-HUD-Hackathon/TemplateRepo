@@ -51,25 +51,34 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
             String name = N["results"][i]["name"];
             String photoref = N["photos"][""];
             locations.Add(new Location(name, geoLocLat, geoLocLon, name, photoref));
+
         }
 
 
 
         //For each location draw a cube on the plane
+        String distances = "";
         foreach (object o in locations)
         {
             //YourObject myObject = (YourObject)o;
             Location temp = (Location)o;
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             //cube.transform.position = new Vector3(temp.getlat(), temp.getlog(), 0.5F);
+
+            VectorController vc = new VectorController();
+            //float meters_away = vc.GetDistance(temp.getlat(), temp.getlog(), origin.getlat(), origin.getlog());
+            float meters_away = vc.GetDistance(origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
+            temp.setDistanceFromOrigin(meters_away);
             
-           
+            distances += temp.getName() + ": " + Convert.ToString(meters_away);
         }
 
+        DebugText.text = Convert.ToString(distances);
+
         //cube.transform.position = new Vector3(temp.getlat(), 0.5F, temp.getlog());
-        VectorController vc = new VectorController();
-        float meters_away = vc.GetDistance(32.378826f, -86.310236f, 32.376867f, -86.311105f);
-        DebugText.text = Convert.ToString(meters_away);
+        //VectorController vc = new VectorController();
+        //float meters_away = vc.GetDistance(32.378826f, -86.310236f, 32.376867f, -86.311105f);
+        //DebugText.text = Convert.ToString(meters_away);
         //for (int i = 0; i < locations.Count; i++ )
         //{
         //    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
