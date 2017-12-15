@@ -37,7 +37,8 @@ public class GoogleMaps_GetMiniMap : MonoBehaviour
         //toastedbuttercookies
 
         /****This one actually works with the drawing a map thing may be good for a mini map type thing    ***/
-        url = "https://maps.googleapis.com/maps/api/staticmap?center=montgomery+ga+historic+locations+map&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        //url = "https://maps.googleapis.com/maps/api/staticmap?center=montgomery+ga+historic+locations+map&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        url = "https://maps.googleapis.com/maps/api/staticmap?center=montgomery+ga+historic+locations+map&zoom=13&size=70x50&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
 
         WWW www = new WWW(url);
         yield return www;
