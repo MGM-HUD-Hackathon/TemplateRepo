@@ -11,11 +11,15 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
 {
     string url;
 
+    Location origin; // = new Location();
+
     public Text DebugText;
 
     //void Start()
     IEnumerator Start()
     {
+        origin = new Location("HackAThon", 32.378826F, -86.310236F, "", "googlemaps");
+             
 
         url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.3784892,-86.3155911&radius=500&keyword=historical&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
 
@@ -65,6 +69,7 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
         //cube.transform.position = new Vector3(temp.getlat(), 0.5F, temp.getlog());
         VectorController vc = new VectorController();
         float meters_away = vc.GetDistance(32.378826f, -86.310236f, 32.376867f, -86.311105f);
+        DebugText.text = Convert.ToString(meters_away);
         //for (int i = 0; i < locations.Count; i++ )
         //{
         //    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
