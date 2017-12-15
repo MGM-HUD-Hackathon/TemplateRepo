@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace Assets.DAQRI.Scripts
+namespace Assets.Controllers
 {
-    class VectorController
+    public class VectorController
     {
         /// <summary>
         /// generally used geo measurement function
@@ -14,24 +11,16 @@ namespace Assets.DAQRI.Scripts
         /// <param name="one"></param>
         /// <param name="two"></param>
         /// <returns></returns>
-        public Vector3 GetDistance(GPSCoordinatePair one, GPSCoordinatePair two)
+        public float GetDistance(float latitudeA, float longitudeA, float latitudeB, float longitudeB)
         {
-            Vector3 returnMe = new Vector3();
-
-            float dLat = RadiansToDegrees(two.Latitude) - RadiansToDegrees(one.Latitude);
-            float dLon = RadiansToDegrees(two.Longitude) - RadiansToDegrees(one.Longitude);
+            float dLat = RadiansToDegrees(latitudeB) - RadiansToDegrees(latitudeA);
+            float dLon = RadiansToDegrees(longitudeB) - RadiansToDegrees(longitudeA);
             float a = Mathf.Sin(dLat / 2) * Mathf.Sin(dLat / 2) +
-            Mathf.Cos(RadiansToDegrees(one.Latitude)) * Mathf.Cos(RadiansToDegrees(two.Latitude)) *
+            Mathf.Cos(RadiansToDegrees(latitudeA)) * Mathf.Cos(RadiansToDegrees(latitudeB)) *
             Mathf.Sin(dLon / 2) * Mathf.Sin(dLon / 2);
             float c = 2 * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1 - a));
-            float d = Constants.EarthRadius * c;
-            return d * 1000; // meters
-
-            returnMe.x = 0;
-            returnMe.y = 0;
-            returnMe.z = 0;
-
-            return returnMe;
+            float d = Constants.Constants.EarthRadius * c;
+            return d * 1000f; // meters
         }
 
         /// <summary>
@@ -58,9 +47,16 @@ namespace Assets.DAQRI.Scripts
 
         private Vector3 calculateTransformPosition(float lat, float lon)
         {
-
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets the point on line.
+        /// </summary>
+        /// <param name="pointA">The point a.</param>
+        /// <param name="pointB">The point b.</param>
+        /// <param name="distance">The distance.</param>
+        /// <returns></returns>
         private Vector3 getPointOnLine(Vector3 pointA, Vector3 pointB, float distance)
         {
             Vector3 vector = pointA - pointB;
@@ -68,6 +64,5 @@ namespace Assets.DAQRI.Scripts
             Vector3 unitVector = vector / vectorLength;
             return pointA + (unitVector * distance);
         }
-
     }
 }

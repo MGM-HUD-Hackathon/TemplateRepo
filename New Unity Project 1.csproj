@@ -101,7 +101,7 @@
     <Compile Include="Assets\DAQRI\Scripts\AdditionalControls.cs" />
     <Compile Include="Assets\DAQRI\Scripts\CalibrationControls.cs" />
     <Compile Include="Assets\DAQRI\Scripts\ColorCameraControls.cs" />
-    <Compile Include="Assets\DAQRI\Scripts\Constants.cs" />
+    <Compile Include="Assets\Common\Constants.cs" />
     <Compile Include="Assets\DAQRI\Scripts\CreateParentCanvas.cs" />
     <Compile Include="Assets\DAQRI\Scripts\DepthControls.cs" />
     <Compile Include="Assets\DAQRI\Scripts\ExampleApplicationLifeCycleEventImpl.cs" />
