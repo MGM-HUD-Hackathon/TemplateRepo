@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
+using Assets.Controllers;
 //using static Locations;
 
 public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
@@ -57,8 +58,13 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
             Location temp = (Location)o;
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             //cube.transform.position = new Vector3(temp.getlat(), temp.getlog(), 0.5F);
-            cube.transform.position = new Vector3(temp.getlat(), 0.5F, temp.getlog());
+            
+           
         }
+
+        //cube.transform.position = new Vector3(temp.getlat(), 0.5F, temp.getlog());
+        VectorController vc = new VectorController();
+        float meters_away = vc.GetDistance(32.378826f, -86.310236f, 32.376867f, -86.311105f);
         //for (int i = 0; i < locations.Count; i++ )
         //{
         //    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
