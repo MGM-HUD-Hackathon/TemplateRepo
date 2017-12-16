@@ -36,6 +36,8 @@ public class GoogleMaps_GetMiniMap : MonoBehaviour
     public mapType mapSelected;
     public int scale;
 
+    bool markersEnabled = true;
+
     private bool dirty;
 
 
@@ -51,6 +53,13 @@ public class GoogleMaps_GetMiniMap : MonoBehaviour
         //url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397,233&zoom=13&size=400x400&maptype=hybrid&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
         //url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397&zoom=13&size=" + mapWidth + "x" + mapHeight +"&maptype=hybrid&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
         url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397&zoom=17&size=" + mapWidth + "x" + mapHeight + "&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        if (markersEnabled)
+        {
+            url += "&markers=color:red%7Clabel:Foe%7C32.3783423,-86.3099101" +
+                "&markers=color:blue%7Clabel:Friend%7C32.378864,-86.310452" +
+                "&markers=color:green%7Clabel:You%7C32.378466,-86.309870";
+        }
+   
         //@32.3784118,-86.3097397,233m
         WWW www = new WWW(url);
         yield return www;
