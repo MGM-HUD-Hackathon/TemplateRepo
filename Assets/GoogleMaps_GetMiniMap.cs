@@ -24,12 +24,19 @@ public class GoogleMaps_GetMiniMap : MonoBehaviour
     LocationInfo li;
 
     public int zoom = 14;
-    public int mapWidth = 640;
-    public int mapHeight = 640;
+    static public int mapMinWidth = 140;
+    static public int mapMinHeight = 100;
+    public int mapMaxWidth = 300;
+    public int mapMaxHeight = 200;
+
+    public int mapWidth = mapMinWidth;
+    public int mapHeight = mapMinHeight;
 
     public enum mapType { roadmap, satellite, hybrid, terrain }
     public mapType mapSelected;
     public int scale;
+
+    private bool dirty;
 
 
     IEnumerator Map()
@@ -38,13 +45,20 @@ public class GoogleMaps_GetMiniMap : MonoBehaviour
 
         /****This one actually works with the drawing a map thing may be good for a mini map type thing    ***/
         //url = "https://maps.googleapis.com/maps/api/staticmap?center=montgomery+ga+historic+locations+map&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
-        url = "https://maps.googleapis.com/maps/api/staticmap?center=montgomery+ga+historic+locations+map&zoom=13&size=70x50&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        //url = "https://maps.googleapis.com/maps/api/staticmap?center=montgomery+ga+historic+locations+map&zoom=13&size="+ mapWidth + "x" + mapHeight + "&maptype=hybrid&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        //url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397,233&zoom=13&size=" + mapWidth + "x" + mapHeight + "&maptype=hybrid&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
 
+        //url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397,233&zoom=13&size=400x400&maptype=hybrid&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        //url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397&zoom=13&size=" + mapWidth + "x" + mapHeight +"&maptype=hybrid&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397&zoom=17&size=" + mapWidth + "x" + mapHeight + "&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
+        //@32.3784118,-86.3097397,233m
         WWW www = new WWW(url);
         yield return www;
         img.texture = www.texture;
         img.SetNativeSize();
-
+        
+        //Vector3.MoveTowards(transform.position, target.position, step);
+        
     }
     // Use this for initialization
     void Start()
@@ -53,9 +67,30 @@ public class GoogleMaps_GetMiniMap : MonoBehaviour
         StartCoroutine(Map());
     }
 
+    public void EnlargeMap()
+    {
+        mapWidth = 300;
+        mapHeight = 200;
+        dirty = true;
+    }
+
+    public void ShrinkMap()
+    {
+        mapWidth = 70;
+        mapHeight = 50;
+        dirty = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        if (dirty)
+        {
+            img = gameObject.GetComponent<RawImage>();
+            StartCoroutine(Map());
+            dirty = false;
+        }
+        //img = gameObject.GetComponent<RawImage>();
+        //StartCoroutine(Map());
     }
 }
