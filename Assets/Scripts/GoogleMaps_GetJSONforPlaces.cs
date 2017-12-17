@@ -5,6 +5,8 @@ using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
 using Assets.Controllers;
+using Mapbox.Unity.Utilities;
+using Mapbox.Utils;
 //using static Locations;
 
 public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
@@ -15,11 +17,17 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
 
     public Text DebugText;
 
+    public GameObject display;
+
+    public Material KitchenMat;
+    public Material BathroomMat;
+    public Material DoorMat;
+
     //void Start()
     IEnumerator Start()
     {
-        origin = new Location("HackAThon", 32.378826F, -86.310236F, "", "googlemaps");
-             
+        //origin = new Location("HackAThon", 32.378826F, -86.310236F, "", "googlemaps");
+        origin = new Location("HackAThon", 32.378457F, -86.309882F, "", "googlemaps");
 
         url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.3784892,-86.3155911&radius=500&keyword=historical&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
 
@@ -35,11 +43,17 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
             DebugText.text = "ERROR: " + www.error;
             //Debug.Log("ERROR: " + www.error);
         }
+        
+        //return;
+
     }
 
 
     private void Processjson(string jsonString)
     {
+        Vector2d untityTempLocation = Conversions.LatLonToMeters(new Vector2d(origin.getlat(), origin.getlog()));
+        display.transform.position = new Vector3(Convert.ToSingle(untityTempLocation.x), 0.5f, Convert.ToSingle(untityTempLocation.y));
+
         ArrayList locations = new ArrayList();
 
         //DebugText.text = jsonString;
@@ -50,30 +64,117 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
             String geoLocLon = N["results"][i]["geometry"]["location"]["lng"];
             String name = N["results"][i]["name"];
             String photoref = N["photos"][""];
-            locations.Add(new Location(name, geoLocLat, geoLocLon, name, photoref));
+            //locations.Add(new Location(name, geoLocLat, geoLocLon, name, photoref));
 
         }
 
-
-
         //For each location draw a cube on the plane
         String distances = "";
+        //   ^
+        //   |
+        //   2
+        //   |
+        //   >
+        //
+        //    
+        //<-1-->
+        //locations.Add(new Location("Kitchen1", 3, 3, "", ""));
+        //locations.Add(new Location("Kitchen2", 3, 4, "", ""));
+
+        //locations.Add(new Location("Kitchen3", -3, 8, "", ""));
+
+        locations.Add(new Location("Bathroom", "32.378601", "-86.309699", "", ""));
+
+        locations.Add(new Location("Kitchen", "32.378545", "-86.309782", "", ""));
+
+
+
+        //locations.Add(new Location("Frount Door", "32.378423", "-86.309932", "", ""));
+
+       
+        locations.Add(new Location("Frount Door", "32.3783423", "-86.3099101", "", ""));
+
+
+        //32.3783423,-86.3099101
+
+
+
+        //locations.Add(new Location("Kitchen", 12, -3, "", ""));
+
+
+        //Normalize the locations before we render the on the screen
+        //locations = Normalize_Locations(origin, locations);
+        Normalize_Locations(origin, locations);
+
         foreach (object o in locations)
         {
             //YourObject myObject = (YourObject)o;
             Location temp = (Location)o;
+            //Vector2d untityLocation = Conversions.LatLonToMeters(new Vector2d(temp.getlat(), temp.getlog()));
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //cube.transform.position = new Vector3(temp.getlat(), temp.getlog(), 0.5F);
+            cube.transform.position = new Vector3(Convert.ToSingle(temp.getunityLat()), 0.0F, Convert.ToSingle(temp.getunityLog()));
+            //cube.transform.position = new Vector3(Convert.ToSingle(untityLocation.x),0.5f,Convert.ToSingle(untityLocation.y));
 
-            VectorController vc = new VectorController();
+            //SimpleMaths sm = new SimpleMaths();
+            //Vector3 tVector= sm.GetLocationFromMeV2(temp.getName(), origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
+            //cube.transform.position = tVector;
+            switch (temp.getName())
+            {
+                case "Frount Door":
+                    {
+                        cube.transform.GetComponent<Renderer>().material = KitchenMat;
+                        break;
+                    }
+                case "Bathroom":
+                    {
+                        cube.transform.GetComponent<Renderer>().material = BathroomMat;
+                        break;
+                    }
+                case "Kitchen":
+                    {
+                        cube.transform.GetComponent<Renderer>().material = DoorMat;
+                        break;
+                    }
+
+            }
+            //cube.transform.GetComponent<Renderer>().material = 
+
+            //VectorController vc = new VectorController();
+            //Vector3 tVector = vc.getRelativePosition(origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
+            //cube.transform.position = tVector;
+
+            //cube.transform.position = tVector;
+
+            //Vector3 tVector = vc.getRelativePosition(origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
+            //getRelativePosition
+            if (temp.getName() == "Kitchen2")
+            {
+                //cube.renderer.material.mainTexture = "mypicture.jpg";
+                //Texture tex = new Texture();
+                //tex.
+                //cube.GetComponent<Renderer>().material.mainTexture = new Texture("invade.jpg");
+                //getRelativePosition
+            }
+            //SimpleMaths sm = new SimpleMaths();
+            //Vector3 tVector= sm.GetLocationFromMe(origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
+            //
+            //
+            //DebugText.text = "X: [" + Convert.ToString(tVector.x) + "],[" + Convert.ToString(tVector.y) + "],[" + Convert.ToString(tVector.z) + "]";
+
+
+            //VectorController vc = new VectorController();
+            //Vector3 tVector = vc.getRelativePosition(origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
+
             //float meters_away = vc.GetDistance(temp.getlat(), temp.getlog(), origin.getlat(), origin.getlog());
-            float meters_away = vc.GetDistance(origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
-            temp.setDistanceFromOrigin(meters_away);
-            
-            distances += temp.getName() + ": " + Convert.ToString(meters_away);
+
+            ////DebugText.text = "X: ["+ Convert.ToString(tVector.x) + "],[" + Convert.ToString(tVector.y) +"],[" + Convert.ToString(tVector.z) + "]";
+            //float meters_away = vc.GetDistance(origin.getlat(), origin.getlog(), temp.getlat(), temp.getlog());
+            //temp.setDistanceFromOrigin(meters_away);
+
+            //distances += temp.getName() + ": " + Convert.ToString(meters_away);
         }
 
-        DebugText.text = Convert.ToString(distances);
+        //DebugText.text = Convert.ToString(distances);
 
         //cube.transform.position = new Vector3(temp.getlat(), 0.5F, temp.getlog());
         //VectorController vc = new VectorController();
@@ -95,6 +196,34 @@ public class GoogleMaps_GetJSONforPlaces : MonoBehaviour
         //Console.WriteLine("Out");
         //Console.WriteLine(geoLocLat + "," + geoLocLon);
         //DebugText.text = geoLocLat + "," + geoLocLon;
+    }
+
+    public void Normalize_Locations(Location center, ArrayList locations)
+    //public ArrayList Normalize_Locations(Location center, ArrayList locations)
+    {
+        //ArrayList Output = new ArrayList();
+        //Calc the center
+        Vector2d centerVector = Conversions.LatLonToMeters(new Vector2d(center.getlat(), center.getlog()));
+        //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //cube.transform.position = new Vector3(Convert.ToSingle(untityLocation.x), 0.5f, Convert.ToSingle(untityLocation.y));
+
+        //Loop through each of the locations and make the adjustments....
+        center.setuntityLat(centerVector.x);
+        center.setuntityLat(centerVector.y);
+
+        foreach (object o in locations)
+        {
+            Location temp = (Location)o;
+            Vector2d tempVector = Conversions.LatLonToMeters(new Vector2d(temp.getlat(), temp.getlog()));
+            tempVector.x -= centerVector.x;
+            tempVector.y -= centerVector.y;
+            temp.setuntityLat(tempVector.x);
+            temp.setuntityLog(tempVector.y);
+
+            //Output.Add (temp);
+        }
+
+        //return Output;
     }
 
 }
