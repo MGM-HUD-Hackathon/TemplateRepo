@@ -9,6 +9,8 @@ public class Location
 {
     private double lat = 0.0F;
     private double log = 0.0F;
+    private double unityLat = 0.0F;
+    private double unityLog = 0.0F;
     private string imgURL = "";
     private string photoRef = "";
     private string name = "";
@@ -17,7 +19,7 @@ public class Location
     public long timestamp { get; set; } //When data was last collected
     public float altitude { get; set; } //Meters above sea level (MSL)
     private string type { get; set; } //Restruant, Landmark etc...
-
+    
     private float distanceFromOrigin = 0.0F;
 
     public Location(string name, string lat, string log, string photoRef, string datasource)
@@ -92,6 +94,25 @@ public class Location
     /************************
      * Getters and Setters  *
      ************************/
+    public double getunityLat()
+    {
+        return unityLat;
+    }
+
+    public double getunityLog()
+    {
+        return unityLog;
+    }
+
+    public void setuntityLat(double unityLat)
+    {
+        this.unityLat = unityLat;
+    }
+
+    public void setuntityLog(double unityLog)
+    {
+        this.unityLog = unityLog;
+    }
 
     public float getlat()
     {
