@@ -55,7 +55,7 @@ public class GoogleMaps_GetMiniMap : MonoBehaviour
         url = "https://maps.googleapis.com/maps/api/staticmap?center=32.3784118,-86.3097397&zoom=17&size=" + mapWidth + "x" + mapHeight + "&maptype=roadmap&key=AIzaSyBhCpXhprxILdcwnzB7VLLcjqZBxlHDwI4";
         if (markersEnabled)
         {
-            url += "&markers=color:red%7Clabel:Foe%7C32.3783423,-86.3099101" +
+            url += "&markers=color:red%7Clabel:Foe%7C32.378056,-86.310327" +
                 "&markers=color:blue%7Clabel:Friend%7C32.378864,-86.310452" +
                 "&markers=color:green%7Clabel:You%7C32.378466,-86.309870";
         }
