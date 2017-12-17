@@ -1,11 +1,14 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Controllers;
 
 internal class Waypoint : MonoBehaviour
 {
     public GameObject camera;
+    private VectorController vectorController = new VectorController();
+
 
     public void Start()
     {
@@ -16,17 +19,24 @@ internal class Waypoint : MonoBehaviour
     {
     }
 
-    private void showRange() {
+    private void showRange()
+    {
         Debug.Log("showRange");
         transform.LookAt(2 * Camera.main.transform.position - transform.position);
-        gameObject.GetComponentInChildren<TextMesh>().transform.rotation = Quaternion.LookRotation(transform.position - camera.transform.position);
-        gameObject.GetComponentInChildren<TextMesh>().text = String.Format("{0:0.00}", calculateRange());
-        gameObject.GetComponentInChildren<TextMesh>().
+
+        foreach (Component c in gameObject.GetComponentsInChildren<TextMesh>())
+        {
+            c.transform.rotation = Quaternion.LookRotation(transform.position - camera.transform.position);
+        }
+
+        gameObject.transform.Find("Distance").GetComponent<TextMesh>().text = String.Format("{0:0}{1}", calculateRange(), "m");
+        gameObject.transform.Find("Bearing").GetComponent<TextMesh>().text = String.Format("{0:0}{1}", vectorController.GetBearing(camera.transform.position, transform.position), "\u00B0");
         gameObject.GetComponent<GUIText>().text = calculateRange().ToString();
         GUI.Label(new Rect(gameObject.transform.position.x, gameObject.transform.position.y, 100, 20), calculateRange().ToString() + "m");
     }
 
-    private float calculateRange() {
+    private float calculateRange()
+    {
         return Vector3.Distance(transform.position, camera.transform.position);
     }
 
@@ -37,5 +47,15 @@ internal class Waypoint : MonoBehaviour
         //transform.position = Camera.main.WorldToViewportPoint(pos);
         //text.enabled = true;
     }
+
+
+
+
+
+
+    //public GameObject WaypointFactory(Vector3 position, string description)
+    //{
+    //    GameObject returnMe = 
+    //}
 
 }
